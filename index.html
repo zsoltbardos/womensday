@@ -100,12 +100,34 @@
     .flowers {
       font-size: 3rem;
       margin: 1rem 0;
-      animation: spin 2s linear infinite;
+      display: flex;
+      justify-content: center;
+      gap: 0.5rem;
+      flex-wrap: wrap;
     }
 
-    @keyframes spin {
-      from { transform: rotate(0deg); }
-      to { transform: rotate(360deg); }
+    .flower-btn {
+      border: none;
+      background: transparent;
+      font-size: inherit;
+      cursor: pointer;
+      transition: transform 0.2s ease, filter 0.2s ease;
+    }
+
+    .flower-btn:hover,
+    .flower-btn:focus-visible {
+      transform: translateY(-4px) scale(1.15);
+      filter: drop-shadow(0 8px 10px rgba(232, 67, 147, 0.25));
+      outline: none;
+    }
+
+    .flower-btn.is-bouncing {
+      animation: flowerBounce 0.45s ease;
+    }
+
+    @keyframes flowerBounce {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.3) translateY(-4px); }
     }
 
     .compliments-section {
@@ -221,6 +243,143 @@
       transform: scale(0.98);
     }
 
+    .sound-toggle {
+      position: fixed;
+      top: 1rem;
+      right: 1rem;
+      z-index: 20;
+      border: none;
+      border-radius: 999px;
+      padding: 0.75rem 1rem;
+      font: inherit;
+      font-weight: 700;
+      color: var(--deep-rose);
+      background: rgba(255, 255, 255, 0.92);
+      box-shadow: 0 10px 25px rgba(232, 67, 147, 0.15);
+      cursor: pointer;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .sound-toggle:hover,
+    .sound-toggle:focus-visible {
+      transform: translateY(-2px);
+      box-shadow: 0 14px 30px rgba(232, 67, 147, 0.22);
+      outline: none;
+    }
+
+    .vibe-section,
+    .surprise-section {
+      max-width: 760px;
+      margin: 0 auto 3rem;
+      padding: 0 1.5rem;
+      text-align: center;
+      position: relative;
+      z-index: 2;
+    }
+
+    .section-card {
+      background: rgba(255, 255, 255, 0.8);
+      border: 2px solid rgba(255, 181, 181, 0.55);
+      border-radius: 24px;
+      padding: 1.5rem;
+      box-shadow: 0 12px 35px rgba(232, 67, 147, 0.12);
+      backdrop-filter: blur(10px);
+    }
+
+    .section-card h3 {
+      color: var(--deep-rose);
+      font-family: 'Playfair Display', serif;
+      font-size: 1.7rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .section-card p {
+      color: #5b5566;
+      line-height: 1.6;
+    }
+
+    .vibe-buttons {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      margin-top: 1rem;
+    }
+
+    .vibe-btn,
+    .surprise-btn {
+      border: none;
+      border-radius: 999px;
+      padding: 0.9rem 1.25rem;
+      font: inherit;
+      font-weight: 700;
+      color: white;
+      cursor: pointer;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      box-shadow: 0 10px 20px rgba(108, 92, 231, 0.15);
+    }
+
+    .vibe-btn:hover,
+    .vibe-btn:focus-visible,
+    .surprise-btn:hover,
+    .surprise-btn:focus-visible {
+      transform: translateY(-3px) scale(1.03);
+      outline: none;
+    }
+
+    .vibe-btn[data-vibe="sunshine"] {
+      background: linear-gradient(135deg, #ffb347, #ff6b6b);
+    }
+
+    .vibe-btn[data-vibe="dreamy"] {
+      background: linear-gradient(135deg, #c9b1ff, #6c5ce7);
+    }
+
+    .vibe-btn[data-vibe="sparkle"] {
+      background: linear-gradient(135deg, #ffd93d, #e84393);
+    }
+
+    .surprise-btn {
+      margin-top: 1rem;
+      background: linear-gradient(135deg, var(--mint), #4da8da);
+    }
+
+    .message-display {
+      min-height: 88px;
+      margin-top: 1rem;
+      padding: 1rem 1.25rem;
+      border-radius: 18px;
+      background: rgba(255, 248, 240, 0.9);
+      color: #5a4d7a;
+      font-size: 1.05rem;
+      line-height: 1.6;
+      box-shadow: inset 0 0 0 1px rgba(232, 67, 147, 0.08);
+    }
+
+    .message-display.is-revealed {
+      animation: revealPop 0.45s ease;
+    }
+
+    .status-text {
+      margin-top: 0.9rem;
+      color: #7b6b8f;
+      font-size: 0.95rem;
+    }
+
+    .pulse-once {
+      animation: pulseOnce 0.5s ease;
+    }
+
+    @keyframes revealPop {
+      0% { transform: scale(0.96); opacity: 0.35; }
+      100% { transform: scale(1); opacity: 1; }
+    }
+
+    @keyframes pulseOnce {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.06); }
+    }
+
     .floating-hearts {
       position: fixed;
       top: 0;
@@ -276,13 +435,21 @@
   </style>
 </head>
 <body>
+  <button class="sound-toggle" id="soundToggle" aria-pressed="true">Sound On</button>
   <div class="floating-hearts" id="heartsContainer"></div>
 
   <section class="hero">
     <h1>Happy Women's Day</h1>
     <p class="name">Francesca!</p>
     <p class="subtitle">You shine brighter than the sun ☀️</p>
-    <div class="flowers">🌸 💐 🌷 🌺 🏵️ 🌻</div>
+    <div class="flowers">
+      <button class="flower-btn" data-note="72" aria-label="Play flower note">🌸</button>
+      <button class="flower-btn" data-note="74" aria-label="Play bouquet note">💐</button>
+      <button class="flower-btn" data-note="76" aria-label="Play tulip note">🌷</button>
+      <button class="flower-btn" data-note="79" aria-label="Play blossom note">🌺</button>
+      <button class="flower-btn" data-note="81" aria-label="Play rosette note">🏵️</button>
+      <button class="flower-btn" data-note="84" aria-label="Play sunflower note">🌻</button>
+    </div>
   </section>
 
   <section class="compliments-section">
@@ -311,6 +478,28 @@
     </div>
   </section>
 
+  <section class="vibe-section">
+    <div class="section-card">
+      <h3>Pick Francesca's Vibe</h3>
+      <p>Tap a mood for a little color shift and a matching mini melody.</p>
+      <div class="vibe-buttons">
+        <button class="vibe-btn" data-vibe="sunshine">Sunshine Glow</button>
+        <button class="vibe-btn" data-vibe="dreamy">Dreamy Sparkle</button>
+        <button class="vibe-btn" data-vibe="sparkle">Star Power</button>
+      </div>
+      <p class="status-text" id="vibeStatus">Current vibe: Sweet celebration</p>
+    </div>
+  </section>
+
+  <section class="surprise-section">
+    <div class="section-card">
+      <h3>Little Surprise Notes</h3>
+      <p>Each tap reveals a fresh reminder of how wonderful Francesca is.</p>
+      <button class="surprise-btn" id="surpriseBtn">Reveal A Sweet Note</button>
+      <div class="message-display" id="messageDisplay">Press the button for a tiny burst of joy.</div>
+    </div>
+  </section>
+
   <section class="inspiration-section">
     <blockquote>
       "Here's to strong women. May we know them. May we be them. May we raise them."
@@ -327,25 +516,33 @@
   <script>
     // Cute MIDI-style sounds (Web Audio API)
     let audioCtx = null;
+    let soundEnabled = true;
     const midiToFreq = (n) => 440 * Math.pow(2, (n - 69) / 12);
     const C5 = midiToFreq(72), D5 = midiToFreq(74), E5 = midiToFreq(76), F5 = midiToFreq(77);
     const G5 = midiToFreq(79), A5 = midiToFreq(81), B5 = midiToFreq(83), C6 = midiToFreq(84);
     const E6 = midiToFreq(88), G6 = midiToFreq(91);
 
     function initAudio() {
-      if (audioCtx) return;
-      audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      if (!audioCtx) {
+        audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      }
+      if (audioCtx.state === 'suspended') {
+        audioCtx.resume();
+      }
     }
 
     function playNote(freq, duration = 0.15, delay = 0, vol = 0.2) {
+      if (!soundEnabled) return;
+      initAudio();
       if (!audioCtx) return;
       const osc = audioCtx.createOscillator();
       const gain = audioCtx.createGain();
       osc.connect(gain);
       gain.connect(audioCtx.destination);
       osc.frequency.value = freq;
-      osc.type = 'sine';
-      gain.gain.setValueAtTime(vol, audioCtx.currentTime + delay);
+      osc.type = 'triangle';
+      gain.gain.setValueAtTime(0.0001, audioCtx.currentTime + delay);
+      gain.gain.linearRampToValueAtTime(vol, audioCtx.currentTime + delay + 0.02);
       gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + delay + duration);
       osc.start(audioCtx.currentTime + delay);
       osc.stop(audioCtx.currentTime + delay + duration);
@@ -367,13 +564,66 @@
     }
 
     function playTinkle() {
-      initAudio();
       playNote(G5, 0.12, 0, 0.12);
+    }
+
+    function playMagicRun() {
+      [C5, D5, E5, G5, C6].forEach((freq, index) => {
+        playNote(freq, 0.18, index * 0.06, 0.12);
+      });
+    }
+
+    function playWarmGlow() {
+      [C5, E5, G5, E5].forEach((freq, index) => {
+        playNote(freq, 0.2, index * 0.09, 0.13);
+      });
+    }
+
+    function playDreamy() {
+      [E5, G5, B5, C6].forEach((freq, index) => {
+        playNote(freq, 0.24, index * 0.1, 0.11);
+      });
+    }
+
+    function playStarPower() {
+      [C6, G5, E6, C6].forEach((freq, index) => {
+        playNote(freq, 0.18, index * 0.08, 0.14);
+      });
+    }
+
+    function burstEmoji(x, y, count = 12) {
+      for (let i = 0; i < count; i++) {
+        const piece = document.createElement('div');
+        piece.className = 'confetti';
+        piece.textContent = hearts[Math.floor(Math.random() * hearts.length)];
+        piece.style.left = x + 'px';
+        piece.style.top = y + 'px';
+        piece.style.width = 'auto';
+        piece.style.height = 'auto';
+        piece.style.backgroundColor = 'transparent';
+        piece.style.fontSize = (14 + Math.random() * 14) + 'px';
+        piece.style.transform = `translate(${(Math.random() - 0.5) * 40}px, ${(Math.random() - 0.5) * 20}px)`;
+        piece.style.animation = `confettiFall ${1.6 + Math.random() * 0.8}s ease-out forwards`;
+        document.body.appendChild(piece);
+        setTimeout(() => piece.remove(), 2600);
+      }
     }
 
     // Floating hearts background
     const hearts = ['💕', '💗', '💖', '🌸', '✨', '💐'];
     const container = document.getElementById('heartsContainer');
+    const soundToggle = document.getElementById('soundToggle');
+    const messageDisplay = document.getElementById('messageDisplay');
+    const surpriseBtn = document.getElementById('surpriseBtn');
+    const vibeStatus = document.getElementById('vibeStatus');
+    const sweetNotes = [
+      'Francesca, your energy feels like sunshine with excellent taste.',
+      'You make warmth, beauty, and strength look effortless.',
+      'The world gets softer and brighter when you are in it.',
+      'You have the kind of presence people remember for all the right reasons.',
+      'Today is a celebration, and you are absolutely part of what makes it beautiful.'
+    ];
+    let noteIndex = 0;
 
     function createHeart() {
       const heart = document.createElement('div');
@@ -390,6 +640,63 @@
       setTimeout(createHeart, i * 500);
     }
     setInterval(createHeart, 3000);
+
+    soundToggle.addEventListener('click', () => {
+      soundEnabled = !soundEnabled;
+      soundToggle.textContent = soundEnabled ? 'Sound On' : 'Sound Off';
+      soundToggle.setAttribute('aria-pressed', String(soundEnabled));
+      if (soundEnabled) {
+        playTinkle();
+      }
+    });
+
+    document.querySelectorAll('.flower-btn').forEach((flower) => {
+      flower.addEventListener('click', (event) => {
+        const midi = Number(flower.dataset.note);
+        playNote(midiToFreq(midi), 0.22, 0, 0.14);
+        flower.classList.remove('is-bouncing');
+        void flower.offsetWidth;
+        flower.classList.add('is-bouncing');
+        const rect = flower.getBoundingClientRect();
+        burstEmoji(rect.left + rect.width / 2, rect.top + rect.height / 2, 8);
+      });
+    });
+
+    document.querySelectorAll('.vibe-btn').forEach((button) => {
+      button.addEventListener('click', () => {
+        document.body.classList.remove('pulse-once');
+        void document.body.offsetWidth;
+        document.body.classList.add('pulse-once');
+
+        const vibe = button.dataset.vibe;
+        if (vibe === 'sunshine') {
+          document.body.style.background = 'linear-gradient(135deg, #fff7c2 0%, #ffd1dc 35%, #ffe8b6 100%)';
+          vibeStatus.textContent = 'Current vibe: Sunshine glow';
+          playWarmGlow();
+        } else if (vibe === 'dreamy') {
+          document.body.style.background = 'linear-gradient(135deg, #f5e8ff 0%, #d9d3ff 50%, #e8f4ff 100%)';
+          vibeStatus.textContent = 'Current vibe: Dreamy sparkle';
+          playDreamy();
+        } else {
+          document.body.style.background = 'linear-gradient(135deg, #fff1f7 0%, #ffe08a 45%, #ffd0f5 100%)';
+          vibeStatus.textContent = 'Current vibe: Star power';
+          playStarPower();
+        }
+        document.body.style.backgroundSize = '400% 400%';
+      });
+    });
+
+    surpriseBtn.addEventListener('click', () => {
+      const note = sweetNotes[noteIndex % sweetNotes.length];
+      noteIndex += 1;
+      messageDisplay.textContent = note;
+      messageDisplay.classList.remove('is-revealed');
+      void messageDisplay.offsetWidth;
+      messageDisplay.classList.add('is-revealed');
+      playMagicRun();
+      const rect = surpriseBtn.getBoundingClientRect();
+      burstEmoji(rect.left + rect.width / 2, rect.top + rect.height / 2, 14);
+    });
 
     // Confetti + fanfare on heart button click
     const heartBtn = document.getElementById('heartBtn');
@@ -428,6 +735,8 @@
         card.offsetHeight;
         card.style.animation = 'cardPop 0.5s ease';
         setTimeout(() => card.style.animation = '', 500);
+        const rect = card.getBoundingClientRect();
+        burstEmoji(rect.left + rect.width / 2, rect.top + 24, 10);
       });
     });
 
