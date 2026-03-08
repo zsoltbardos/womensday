@@ -325,6 +325,52 @@
   </footer>
 
   <script>
+    // Cute MIDI-style sounds (Web Audio API)
+    let audioCtx = null;
+    const midiToFreq = (n) => 440 * Math.pow(2, (n - 69) / 12);
+    const C5 = midiToFreq(72), D5 = midiToFreq(74), E5 = midiToFreq(76), F5 = midiToFreq(77);
+    const G5 = midiToFreq(79), A5 = midiToFreq(81), B5 = midiToFreq(83), C6 = midiToFreq(84);
+    const E6 = midiToFreq(88), G6 = midiToFreq(91);
+
+    function initAudio() {
+      if (audioCtx) return;
+      audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    }
+
+    function playNote(freq, duration = 0.15, delay = 0, vol = 0.2) {
+      if (!audioCtx) return;
+      const osc = audioCtx.createOscillator();
+      const gain = audioCtx.createGain();
+      osc.connect(gain);
+      gain.connect(audioCtx.destination);
+      osc.frequency.value = freq;
+      osc.type = 'sine';
+      gain.gain.setValueAtTime(vol, audioCtx.currentTime + delay);
+      gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + delay + duration);
+      osc.start(audioCtx.currentTime + delay);
+      osc.stop(audioCtx.currentTime + delay + duration);
+    }
+
+    function playChime() {
+      initAudio();
+      const notes = [C5, E5, G5, C6];
+      notes.forEach((f, i) => playNote(f, 0.2, i * 0.08, 0.18));
+    }
+
+    function playFanfare() {
+      initAudio();
+      const melody = [
+        [C5, 0], [E5, 0.1], [G5, 0.2], [C6, 0.3], [E6, 0.4], [G6, 0.5],
+        [C6, 0.7], [G5, 0.8], [E5, 0.9], [C5, 1.0]
+      ];
+      melody.forEach(([freq, delay]) => playNote(freq, 0.25, delay, 0.15));
+    }
+
+    function playTinkle() {
+      initAudio();
+      playNote(G5, 0.12, 0, 0.12);
+    }
+
     // Floating hearts background
     const hearts = ['💕', '💗', '💖', '🌸', '✨', '💐'];
     const container = document.getElementById('heartsContainer');
@@ -345,9 +391,10 @@
     }
     setInterval(createHeart, 3000);
 
-    // Confetti on heart button click
+    // Confetti + fanfare on heart button click
     const heartBtn = document.getElementById('heartBtn');
     heartBtn.addEventListener('click', () => {
+      playFanfare();
       const colors = ['#ff6b6b', '#e84393', '#c9b1ff', '#ffd93d', '#6bcb77'];
       for (let i = 0; i < 50; i++) {
         const confetti = document.createElement('div');
@@ -367,9 +414,16 @@
       setTimeout(() => { heartBtn.textContent = 'Send More Love 💕'; }, 2000);
     });
 
-    // Compliment cards - extra bounce on click
+    // Compliment cards - tinkle on hover, chime + bounce on click
+    let hoverTimeout;
     document.querySelectorAll('.compliment-card').forEach(card => {
+      card.addEventListener('mouseenter', () => {
+        clearTimeout(hoverTimeout);
+        hoverTimeout = setTimeout(() => playTinkle(), 100);
+      });
+      card.addEventListener('mouseleave', () => clearTimeout(hoverTimeout));
       card.addEventListener('click', () => {
+        playChime();
         card.style.animation = 'none';
         card.offsetHeight;
         card.style.animation = 'cardPop 0.5s ease';
