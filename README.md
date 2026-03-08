@@ -1,6 +1,6 @@
 # Happy Women's Day, Francesca! 💐
 
-A personalized, interactive International Women's Day celebration site.
+A personalized, interactive International Women's Day 2026 celebration site.
 
 ## Deploy to GitHub Pages
 
