@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Happy Women's Day, Francesca! 💐</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --coral: #ff6b6b;
+      --peach: #ffd93d;
+      --mint: #6bcb77;
+      --lavender: #c9b1ff;
+      --blush: #ffb5b5;
+      --cream: #fff8f0;
+      --deep-rose: #e84393;
+      --gold: #f9ca24;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Quicksand', sans-serif;
+      background: linear-gradient(135deg, #fff8f0 0%, #ffe4ec 25%, #e8f4f8 50%, #fef9e7 75%, #fff8f0 100%);
+      background-size: 400% 400%;
+      animation: gradientShift 15s ease infinite;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    @keyframes gradientShift {
+      0%, 100% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+    }
+
+    .confetti {
+      position: fixed;
+      width: 10px;
+      height: 10px;
+      pointer-events: none;
+      z-index: 9999;
+    }
+
+    @keyframes confettiFall {
+      to {
+        transform: translateY(100vh) rotate(720deg);
+        opacity: 0;
+      }
+    }
+
+    .hero {
+      text-align: center;
+      padding: 4rem 2rem 3rem;
+      position: relative;
+    }
+
+    .hero h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2rem, 8vw, 4rem);
+      color: var(--deep-rose);
+      text-shadow: 2px 2px 0 var(--blush);
+      margin-bottom: 0.5rem;
+      animation: float 3s ease-in-out infinite;
+    }
+
+    .hero .name {
+      font-size: clamp(2.5rem, 10vw, 5rem);
+      background: linear-gradient(135deg, var(--coral), var(--deep-rose), var(--lavender));
+      background-size: 200% 200%;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      font-weight: 700;
+      animation: nameGlow 4s ease-in-out infinite;
+    }
+
+    @keyframes nameGlow {
+      0%, 100% { filter: brightness(1); }
+      50% { filter: brightness(1.2); }
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-8px); }
+    }
+
+    .subtitle {
+      font-size: 1.3rem;
+      color: #6c5ce7;
+      margin-top: 1rem;
+      font-weight: 500;
+    }
+
+    .flowers {
+      font-size: 3rem;
+      margin: 1rem 0;
+      animation: spin 2s linear infinite;
+    }
+
+    @keyframes spin {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
+    .compliments-section {
+      max-width: 700px;
+      margin: 0 auto 3rem;
+      padding: 0 1.5rem;
+    }
+
+    .compliments-section h2 {
+      text-align: center;
+      color: var(--deep-rose);
+      font-family: 'Playfair Display', serif;
+      font-size: 1.8rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .compliment-cards {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .compliment-card {
+      background: rgba(255, 255, 255, 0.85);
+      backdrop-filter: blur(10px);
+      border-radius: 20px;
+      padding: 1.5rem;
+      box-shadow: 0 8px 32px rgba(232, 67, 147, 0.15);
+      border: 2px solid rgba(255, 181, 181, 0.5);
+      cursor: pointer;
+      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .compliment-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+      transition: left 0.6s;
+    }
+
+    .compliment-card:hover {
+      transform: scale(1.03) translateY(-5px);
+      box-shadow: 0 15px 40px rgba(232, 67, 147, 0.25);
+      border-color: var(--coral);
+    }
+
+    .compliment-card:hover::before {
+      left: 100%;
+    }
+
+    .compliment-card .emoji {
+      font-size: 2rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .compliment-card p {
+      color: #4a4a4a;
+      font-size: 1.1rem;
+      line-height: 1.6;
+    }
+
+    .inspiration-section {
+      text-align: center;
+      padding: 3rem 2rem;
+      background: linear-gradient(180deg, transparent, rgba(201, 177, 255, 0.2));
+    }
+
+    .inspiration-section blockquote {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.2rem, 4vw, 1.6rem);
+      font-style: italic;
+      color: #5a4d7a;
+      max-width: 600px;
+      margin: 0 auto 1rem;
+      line-height: 1.8;
+    }
+
+    .inspiration-section cite {
+      font-family: 'Quicksand', sans-serif;
+      font-style: normal;
+      color: var(--deep-rose);
+      font-weight: 600;
+    }
+
+    .heart-btn {
+      display: inline-block;
+      margin-top: 2rem;
+      padding: 1rem 2.5rem;
+      font-family: 'Quicksand', sans-serif;
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: white;
+      background: linear-gradient(135deg, var(--coral), var(--deep-rose));
+      border: none;
+      border-radius: 50px;
+      cursor: pointer;
+      box-shadow: 0 6px 20px rgba(232, 67, 147, 0.4);
+      transition: all 0.3s ease;
+    }
+
+    .heart-btn:hover {
+      transform: scale(1.05);
+      box-shadow: 0 8px 30px rgba(232, 67, 147, 0.5);
+    }
+
+    .heart-btn:active {
+      transform: scale(0.98);
+    }
+
+    .floating-hearts {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 1;
+      overflow: hidden;
+    }
+
+    .floating-heart {
+      position: absolute;
+      font-size: 1.5rem;
+      opacity: 0.3;
+      animation: floatUp 6s ease-in-out infinite;
+    }
+
+    @keyframes floatUp {
+      0%, 100% {
+        transform: translateY(100vh) rotate(0deg);
+        opacity: 0;
+      }
+      10% { opacity: 0.3; }
+      90% { opacity: 0.2; }
+      100% {
+        transform: translateY(-100px) rotate(360deg);
+        opacity: 0;
+      }
+    }
+
+    footer {
+      text-align: center;
+      padding: 2rem;
+      color: #888;
+      font-size: 0.9rem;
+    }
+
+    .sparkle {
+      display: inline-block;
+      animation: sparkle 1.5s ease-in-out infinite;
+    }
+
+    @keyframes sparkle {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.5; transform: scale(1.2); }
+    }
+
+    @media (max-width: 600px) {
+      .hero { padding: 3rem 1rem 2rem; }
+      .compliment-card { padding: 1.2rem; }
+    }
+  </style>
+</head>
+<body>
+  <div class="floating-hearts" id="heartsContainer"></div>
+
+  <section class="hero">
+    <h1>Happy Women's Day</h1>
+    <p class="name">Francesca!</p>
+    <p class="subtitle">You shine brighter than the sun ☀️</p>
+    <div class="flowers">🌸 💐 🌷 🌺 🏵️ 🌻</div>
+  </section>
+
+  <section class="compliments-section">
+    <h2><span class="sparkle">✨</span> Why You're Amazing <span class="sparkle">✨</span></h2>
+    <div class="compliment-cards">
+      <div class="compliment-card" data-compliment="1">
+        <span class="emoji">💫</span>
+        <p>Your presence lights up every room you walk into. The world is genuinely better with you in it, Francesca!</p>
+      </div>
+      <div class="compliment-card" data-compliment="2">
+        <span class="emoji">🌟</span>
+        <p>You have a strength that inspires everyone around you. Your resilience and grace are truly remarkable.</p>
+      </div>
+      <div class="compliment-card" data-compliment="3">
+        <span class="emoji">💖</span>
+        <p>Your kindness ripples out and touches so many lives. You make people feel seen and valued—and that's a superpower.</p>
+      </div>
+      <div class="compliment-card" data-compliment="4">
+        <span class="emoji">🦋</span>
+        <p>You're not just beautiful on the outside—your inner beauty, your spirit, your heart—they're extraordinary.</p>
+      </div>
+      <div class="compliment-card" data-compliment="5">
+        <span class="emoji">🌈</span>
+        <p>You bring color and joy wherever you go. Thank you for being you—exactly as you are. You're enough, and you're wonderful.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="inspiration-section">
+    <blockquote>
+      "Here's to strong women. May we know them. May we be them. May we raise them."
+    </blockquote>
+    <cite>— And may we celebrate them, like you, Francesca! 💐</cite>
+    <br>
+    <button class="heart-btn" id="heartBtn">Send Love 💕</button>
+  </section>
+
+  <footer>
+    Made with 💗 for Francesca on International Women's Day 2025
+  </footer>
+
+  <script>
+    // Floating hearts background
+    const hearts = ['💕', '💗', '💖', '🌸', '✨', '💐'];
+    const container = document.getElementById('heartsContainer');
+
+    function createHeart() {
+      const heart = document.createElement('div');
+      heart.className = 'floating-heart';
+      heart.textContent = hearts[Math.floor(Math.random() * hearts.length)];
+      heart.style.left = Math.random() * 100 + '%';
+      heart.style.animationDuration = (4 + Math.random() * 4) + 's';
+      heart.style.animationDelay = Math.random() * 2 + 's';
+      container.appendChild(heart);
+      setTimeout(() => heart.remove(), 8000);
+    }
+
+    for (let i = 0; i < 12; i++) {
+      setTimeout(createHeart, i * 500);
+    }
+    setInterval(createHeart, 3000);
+
+    // Confetti on heart button click
+    const heartBtn = document.getElementById('heartBtn');
+    heartBtn.addEventListener('click', () => {
+      const colors = ['#ff6b6b', '#e84393', '#c9b1ff', '#ffd93d', '#6bcb77'];
+      for (let i = 0; i < 50; i++) {
+        const confetti = document.createElement('div');
+        confetti.className = 'confetti';
+        confetti.style.left = Math.random() * 100 + 'vw';
+        confetti.style.top = '50vh';
+        confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+        confetti.style.borderRadius = Math.random() > 0.5 ? '50%' : '0';
+        confetti.style.width = (6 + Math.random() * 8) + 'px';
+        confetti.style.height = confetti.style.width;
+        confetti.style.animation = `confettiFall ${1 + Math.random() * 2}s ease-out forwards`;
+        document.body.appendChild(confetti);
+        setTimeout(() => confetti.remove(), 3000);
+      }
+
+      heartBtn.textContent = 'Love sent! 💖✨';
+      setTimeout(() => { heartBtn.textContent = 'Send More Love 💕'; }, 2000);
+    });
+
+    // Compliment cards - extra bounce on click
+    document.querySelectorAll('.compliment-card').forEach(card => {
+      card.addEventListener('click', () => {
+        card.style.animation = 'none';
+        card.offsetHeight;
+        card.style.animation = 'cardPop 0.5s ease';
+        setTimeout(() => card.style.animation = '', 500);
+      });
+    });
+
+    const cardStyle = document.createElement('style');
+    cardStyle.textContent = `
+      @keyframes cardPop {
+        0% { transform: scale(1); }
+        50% { transform: scale(1.05); }
+        100% { transform: scale(1); }
+      }
+    `;
+    document.head.appendChild(cardStyle);
+  </script>
+</body>
+</html>
